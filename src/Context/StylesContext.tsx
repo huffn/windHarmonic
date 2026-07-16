@@ -27,11 +27,11 @@ const StylesProvider = ({ children }: ChildrenProps) => {
   // Returns a value for BOX_HEIGHT based on difficulty.
   function getBoxHeight() {
     if (lettersDifficulty === "EASY") {
-      return 100;
+      return 135;
     } else if (lettersDifficulty === "MEDIUM") {
-      return 100;
+      return 145;
     } /* lettersDifficulty === "HARD" */ else {
-      return 75;
+      return 145;
     }
   }
 

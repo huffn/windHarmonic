@@ -3,7 +3,7 @@ import "./Title.scss";
 function Title() {
   return (
     <h1 className="title no-highlight">
-      <a href="/">Typeshift</a>
+      <a href="/">Wind Harmonic Calibration System</a>
     </h1>
   );
 }

@@ -14,11 +14,15 @@ interface IGameOptionsContextProps {
   lettersDifficulty: string;
   setLettersDifficulty: (difficulty: string) => void;
   foundWords: string[];
+  extraFoundWords: string[];
   setFoundWords: React.Dispatch<React.SetStateAction<string[]>>;
+  setExtraFoundWords: React.Dispatch<React.SetStateAction<string[]>>;
   wordIsFound: boolean;
   setWordIsFound: React.Dispatch<React.SetStateAction<boolean>>;
   gameWon: boolean;
   setGameWon: React.Dispatch<React.SetStateAction<boolean>>;
+  gamesWon: string[];
+  setGamesWon: React.Dispatch<React.SetStateAction<string[]>>;
   onTouchScreen: boolean;
   setOnTouchScreen: (value: boolean) => void;
   currentWord: string;
@@ -26,7 +30,9 @@ interface IGameOptionsContextProps {
   letters: any[];
   setLetters: React.Dispatch<React.SetStateAction<any>>;
   goalWords: string[];
+  extraGoalWords: string[];
   setGoalWords: React.Dispatch<React.SetStateAction<string[]>>;
+  setExtraGoalWords: React.Dispatch<React.SetStateAction<string[]>>;
   longestColumn: number;
   setLongestColumn: React.Dispatch<React.SetStateAction<number>>;
   gameStart: boolean;
@@ -48,17 +54,26 @@ const GameOptionsProvider = ({ children }: ChildrenProps) => {
   // The words found of the current game.
   const [foundWords, setFoundWords] = useState<string[]>([]);
 
+  // The extra words found of the current game.
+  const [extraFoundWords, setExtraFoundWords] = useState<string[]>([]);
+
   // Boolean if a word is found.
   const [wordIsFound, setWordIsFound] = useState(false);
 
   // State for game win.
   const [gameWon, setGameWon] = useState<boolean>(false);
 
+  // State for games won.
+  const [gamesWon, setGamesWon] = useState<string[]>([]);
+
   // The letters for the current difficulty.
   const [letters, setLetters] = useState([]);
 
   // The goal words to find for the current difficulty.
   const [goalWords, setGoalWords] = useState<string[]>([]);
+
+  // The extra goal words to find for the current difficulty.
+  const [extraGoalWords, setExtraGoalWords] = useState<string[]>([]);
 
   // Sets the starting word based on the initial position fo each column.
   const [currentWord, setCurrentWord] = useState<string>("");
@@ -99,6 +114,15 @@ const GameOptionsProvider = ({ children }: ChildrenProps) => {
     // Setting goal words.
     setGoalWords(gameData.goalWords);
 
+    // Setting extra goal words.
+    setExtraGoalWords(gameData.potentialWords);
+
+    // Setting found words.
+    setFoundWords(Array.from(gameData.goalWords, (word) => "-".repeat(word.length)));
+
+    // Setting extra found words.
+    setExtraFoundWords(Array.from(gameData.potentialWords, (word) => "-".repeat(word.length)));
+
     // Setting the current word.
     setCurrentWord(() => {
       var word = "";
@@ -131,12 +155,17 @@ const GameOptionsProvider = ({ children }: ChildrenProps) => {
   function resetGame() {
     setLettersDifficulty("");
     setFoundWords([]);
+    setExtraFoundWords([]);
     setWordIsFound(false);
     setGameWon(false);
     setLetters;
     setGoalWords;
+    setExtraGoalWords;
     setLongestColumn;
     setGameStart(false);
+    if (gamesWon.length === 3) {
+      setGamesWon([]);
+    }
   }
 
   return (
@@ -146,11 +175,15 @@ const GameOptionsProvider = ({ children }: ChildrenProps) => {
           lettersDifficulty,
           setLettersDifficulty,
           foundWords,
+          extraFoundWords,
           setFoundWords,
+          setExtraFoundWords,
           wordIsFound,
           setWordIsFound,
           gameWon,
           setGameWon,
+          gamesWon,
+          setGamesWon,
           onTouchScreen,
           setOnTouchScreen,
           currentWord,
@@ -158,7 +191,9 @@ const GameOptionsProvider = ({ children }: ChildrenProps) => {
           letters,
           setLetters,
           goalWords,
+          extraGoalWords,
           setGoalWords,
+          setExtraGoalWords,
           longestColumn,
           setLongestColumn,
           gameStart,
